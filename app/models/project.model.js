@@ -8,14 +8,32 @@ module.exports = (sequelize, Sequelize) => {
     location: {
       type: Sequelize.STRING,
     },
+    launch: {
+      type: Sequelize.STRING,
+    },
     no_of_units: {
       type: Sequelize.INTEGER,
     },
     unit_types: {
       type: Sequelize.ARRAY(Sequelize.TEXT),
     },
-    price_range: {
+    price_range_2R: {
       type: Sequelize.RANGE(Sequelize.INTEGER),
+    },
+    price_range_3R: {
+      type: Sequelize.RANGE(Sequelize.INTEGER),
+    },
+    price_range_4R: {
+      type: Sequelize.RANGE(Sequelize.INTEGER),
+    },
+    price_range_5R: {
+      type: Sequelize.RANGE(Sequelize.INTEGER),
+    },
+    price_range_3Gen: {
+      type: Sequelize.RANGE(Sequelize.INTEGER),
+    },
+    articles: {
+      type: Sequelize.ARRAY(Sequelize.TEXT),
     },
     status: {
       type: Sequelize.STRING,

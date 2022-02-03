@@ -2,25 +2,19 @@ const projects = require("../controllers/project.controller.js");
 
 var router = require("express").Router();
 
-// Create a new Project
+// Create a new project
 router.post("/", projects.create);
 
 // Retrieve all projects
 router.get("/", projects.findAll);
 
-// Retrieve all published projects
-router.get("/published", projects.findAllPublished);
+// Retrieve a single Project with launch
+router.get("/:launch", projects.findOne);
 
-// Retrieve a single Project with id
-router.get("/:id", projects.findOne);
+// Update a Project with launch
+router.put("/:launch", projects.update);
 
-// Update a Project with id
-router.put("/:id", projects.update);
-
-// Delete a Project with id
-router.delete("/:id", projects.delete);
-
-// Create a new Project
-router.delete("/", projects.deleteAll);
+// Delete a Project with launch
+router.delete("/:launch", projects.delete);
 
 module.exports = router;
