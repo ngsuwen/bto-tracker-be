@@ -5,16 +5,13 @@ var router = require("express").Router();
 // Create a new unit
 router.post("/", units.create);
 
-// Retrieve all units
-router.get("/", units.findAll);
+// Retrieve all units with launch and blk
+router.get("/:launch/:blk", units.findAll);
 
-// Retrieve a single unit with launch
-router.get("/:launch", units.findOne);
+// Update a unit with launch, blk and unit to be edited
+router.put("/:launch/:blk/:unit", units.update);
 
-// Update a unit with launch
-router.put("/:launch", units.update);
-
-// Delete a unit with launch
-router.delete("/:launch", units.delete);
+// Delete a unit with launch, blk and unit to be deleted
+router.delete("/:launch/:blk/:unit", units.delete);
 
 module.exports = router;

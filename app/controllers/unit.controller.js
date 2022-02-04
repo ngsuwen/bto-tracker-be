@@ -27,27 +27,15 @@ exports.create = (req, res) => {
     });
 };
 
-// Retrieve all Units from the database.
+// Retrieve all units with launch and blk
 exports.findAll = (req, res) => {
-  Unit.findAll()
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving Units.",
-      });
-    });
-};
-
-// Find a single Unit with launch
-exports.findOne = (req, res) => {
   let launch = req.params.launch
+  let blk = req.params.blk
 
   Unit.findAll({
     where: {
       "launch": launch,
+      "blk": blk,
     },
   })
     .then((data) => {
@@ -55,13 +43,13 @@ exports.findOne = (req, res) => {
         res.send(data);
       } else {
         res.status(404).send({
-          message: `Cannot find Unit with launch=${launch}.`,
+          message: `Cannot find Unit with launch=${launch} and blk=${blk}.`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Error retrieving Unit with launch=" + launch,
+        message: "Error retrieving Unit with launch=" + launch + "and blk=" + blk,
       });
     });
 };
@@ -69,9 +57,15 @@ exports.findOne = (req, res) => {
 // Update a Unit by launch
 exports.update = (req, res) => {
   let launch = req.params.launch
+  let blk = req.params.blk
+  let unit = req.params.unit
 
   Unit.update(req.body, {
-    where: { "launch": launch },
+    where: { 
+      "launch": launch,
+      "blk": blk,
+      "unit": unit
+    },
   })
     .then((num) => {
       if (num == 1) {
@@ -80,13 +74,13 @@ exports.update = (req, res) => {
         });
       } else {
         res.send({
-          message: `Cannot update Unit with launch=${launch}. Maybe Unit was not found or req.body is empty!`,
+          message: `Cannot update Unit with launch=${launch} and blk=${blk}. Maybe Unit was not found or req.body is empty!`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Error updating Unit with launch=" + launch,
+        message: "Error updating Unit with launch=" + launch + "and blk=" + blk,
       });
     });
 };
@@ -94,9 +88,15 @@ exports.update = (req, res) => {
 // Delete a Unit by launch
 exports.delete = (req, res) => {
   let launch = req.params.launch
+  let blk = req.params.blk
+  let unit = req.params.unit
 
   Unit.destroy({
-    where: { "launch": launch },
+    where: { 
+      "launch": launch,
+      "blk": blk,
+      "unit": unit
+    },
   })
     .then((num) => {
       if (num == 1) {
@@ -105,13 +105,13 @@ exports.delete = (req, res) => {
         });
       } else {
         res.send({
-          message: `Cannot delete Unit with launch=${launch}. Maybe Unit was not found!`,
+          message: `Cannot delete Unit with launch=${launch} and blk=${blk}. Maybe Unit was not found!`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Could not delete Unit with launch=" + launch,
+        message: "Could not delete Unit with launch=" + launch + "and blk=" + blk,
       });
     });
 };
