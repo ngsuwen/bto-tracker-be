@@ -1,5 +1,3 @@
-const { INTEGER } = require("sequelize");
-
 module.exports = (sequelize, Sequelize) => {
   const Project = sequelize.define("projects", { // table name
     name: {

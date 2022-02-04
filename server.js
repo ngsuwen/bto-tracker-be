@@ -25,6 +25,8 @@ db.sequelize.sync();
 // controllers
 const projectController = require("./app/routes/project.routes")
 app.use("/api/project", projectController)
+const unitController = require("./app/routes/unit.routes")
+app.use("/api/units", unitController)
 
 // set port, listen for requests
 const PORT = process.env.PORT || 3000;

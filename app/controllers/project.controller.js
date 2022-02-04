@@ -1,5 +1,5 @@
 const db = require("../models/index");
-const Project = db.projectss; // table name
+const Project = db.projects; // table name
 const Op = db.Sequelize.Op;
 
 // Create and Save a new project

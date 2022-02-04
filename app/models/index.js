@@ -12,7 +12,8 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.projectss = require("./project.model.js")(sequelize, Sequelize); // table name
+db.projects = require("./project.model.js")(sequelize, Sequelize); // table name
+db.units = require("./unit.model.js")(sequelize, Sequelize); // table name
 
 module.exports = db;
 
