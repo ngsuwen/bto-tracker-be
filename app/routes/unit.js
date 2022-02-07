@@ -1,4 +1,4 @@
-const units = require("../controllers/unit.controller.js");
+const units = require("../controllers/unit.js");
 
 var router = require("express").Router();
 

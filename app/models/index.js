@@ -12,8 +12,12 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.projects = require("./project.model.js")(sequelize, Sequelize); // table name
-db.units = require("./unit.model.js")(sequelize, Sequelize); // table name
+db.projects = require("./project.js")(sequelize, Sequelize); // table name
+db.units = require("./unit.js")(sequelize, Sequelize); // table name
+
+// associations
+db.projects.hasMany(db.units)
+db.units.belongsTo(db.projects)
 
 module.exports = db;
 

@@ -1,4 +1,4 @@
-const projects = require("../controllers/project.controller.js");
+const projects = require("../controllers/project.js");
 
 var router = require("express").Router();
 

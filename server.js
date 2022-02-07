@@ -23,9 +23,9 @@ db.sequelize.sync();
 // });
 
 // controllers
-const projectController = require("./app/routes/project.routes")
+const projectController = require("./app/routes/project")
 app.use("/api/project", projectController)
-const unitController = require("./app/routes/unit.routes")
+const unitController = require("./app/routes/unit")
 app.use("/api/units", unitController)
 
 // set port, listen for requests

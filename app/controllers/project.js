@@ -50,7 +50,7 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
   let launch = req.params.launch
 
-  Project.findAll({
+  Project.findOne({
     where: {
       "launch": launch,
     },

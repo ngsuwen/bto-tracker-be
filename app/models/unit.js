@@ -1,8 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
   const Unit = sequelize.define("units", { // table name
-    launch: {
-        type: Sequelize.STRING,
-    },
     blk: {
       type: Sequelize.STRING,
     },

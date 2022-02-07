@@ -1,17 +1,26 @@
 const db = require("../models/index");
-const Unit = db.units; // table name
+const Unit = db.units; // units table
+const Project = db.projects; // projects table
 const Op = db.Sequelize.Op;
 
 // Create and Save a new Unit
-exports.create = (req, res) => {
+exports.create = async(req, res) => {
   // Create a Unit
+  const project = await Project.findOne({
+    where: {
+      "launch": req.body.launch,
+    },
+  })
+
+  console.log(project)
+
   const unit = {
-    launch: req.body.launch,
     blk: req.body.blk,
     unit: req.body.unit,
     unit_type: req.body.unit_type,
     price: req.body.price,
     availability: req.body.availability,
+    projectId: project.id
   };
 
   // Save Unit in the database
