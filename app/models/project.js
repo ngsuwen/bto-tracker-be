@@ -15,6 +15,9 @@ module.exports = (sequelize, Sequelize) => {
     unit_types: {
       type: Sequelize.ARRAY(Sequelize.TEXT),
     },
+    unit_breakdown: {
+      type: Sequelize.ARRAY(Sequelize.INTEGER),
+    },
     price_range_2R: {
       type: Sequelize.RANGE(Sequelize.INTEGER),
     },
