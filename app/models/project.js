@@ -39,6 +39,18 @@ module.exports = (sequelize, Sequelize) => {
     status: {
       type: Sequelize.STRING,
     },
+    admin: {
+      type: Sequelize.BOOLEAN,
+    },
+    data_scraper: {
+      type: Sequelize.BOOLEAN,
+    },
+    preview_url: {
+      type: Sequelize.STRING,
+    },
+    location_url: {
+      type: Sequelize.STRING,
+    },
   });
 
   return Project;

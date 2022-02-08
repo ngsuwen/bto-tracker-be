@@ -18,7 +18,11 @@ exports.create = (req, res) => {
     price_range_3Gen: req.body.price_range_3Gen || null,
     status: req.body.status,
     unit_breakdown: req.body.unit_breakdown,
-    articles: req.body.articles
+    articles: req.body.articles,
+    admin: false,
+    data_scraper: false,
+    preview_url: req.body.preview_url,
+    location_url: req.body.location_url,
   };
 
   // Save Project in the database
