@@ -37,15 +37,13 @@ exports.create = async(req, res) => {
     });
 };
 
-// Retrieve all units with launch and blk
+// Retrieve all units with launch
 exports.findAll = (req, res) => {
   let launch = req.params.launch
-  let blk = req.params.blk
 
   Unit.findAll({
     where: {
-      "launch": launch,
-      "blk": blk,
+      "fk_launch": launch,
     },
   })
     .then((data) => {
@@ -53,13 +51,13 @@ exports.findAll = (req, res) => {
         res.send(data);
       } else {
         res.status(404).send({
-          message: `Cannot find Unit with launch=${launch} and blk=${blk}.`,
+          message: `Cannot find Unit with launch=${launch}.`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Error retrieving Unit with launch=" + launch + "and blk=" + blk,
+        message: "Error retrieving Unit with launch=" + launch,
       });
     });
 };

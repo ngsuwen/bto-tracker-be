@@ -6,7 +6,7 @@ var router = require("express").Router();
 router.post("/", units.create);
 
 // Retrieve all units with launch and blk
-router.get("/:launch/:blk", units.findAll);
+router.get("/:launch", units.findAll);
 
 // Update a unit with launch, blk and unit to be edited
 router.put("/:launch/:blk/:unit", units.update);
