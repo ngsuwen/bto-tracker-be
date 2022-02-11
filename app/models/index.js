@@ -17,7 +17,7 @@ db.units = require("./unit.js")(sequelize, Sequelize); // table name
 
 // associations
 db.projects.hasMany(db.units)
-db.units.belongsTo(db.projects)
+db.units.belongsTo(db.projects, {foreignKey: 'fk_launch', targetKey: 'launch'})
 
 module.exports = db;
 

@@ -20,7 +20,8 @@ exports.create = async(req, res) => {
     unit_type: req.body.unit_type,
     price: req.body.price,
     availability: req.body.availability,
-    projectId: project.id
+    projectId: project.id,
+    fk_launch: project.launch
   };
 
   // Save Unit in the database

@@ -8,6 +8,7 @@ module.exports = (sequelize, Sequelize) => {
     },
     launch: {
       type: Sequelize.STRING,
+      unique: true,
     },
     no_of_units: {
       type: Sequelize.INTEGER,
