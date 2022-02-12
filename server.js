@@ -1,11 +1,12 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const session = require("express-session");
 
 const app = express();
 
 var corsOptions = {
-  origin: "http://localhost:3000"
+  origin: "http://localhost:3000",
 };
 
 app.use(cors(corsOptions));
@@ -29,13 +30,31 @@ db.sequelize.sync();
 //   console.log("Drop and re-sync db.");
 // });
 
+// sessions
+app.use(
+  session({
+    secret: process.env.SECRET,
+    saveUninitialized: false,
+    resave: false,
+  })
+);
+
+const sessionController = require("./app/routes/session");
+app.use("/api/sessions", sessionController);
+
+//check if there is valid session
+app.use((req, res, next)=>{
+  console.log(req.session)
+  next()
+})
+
 // controllers
-const projectController = require("./app/routes/project")
-app.use("/api/project", projectController)
-const unitController = require("./app/routes/unit")
-app.use("/api/units", unitController)
-const userController = require("./app/routes/user")
-app.use("/api/user", userController)
+const projectController = require("./app/routes/project");
+app.use("/api/project", projectController);
+const unitController = require("./app/routes/unit");
+app.use("/api/units", unitController);
+const userController = require("./app/routes/user");
+app.use("/api/user", userController);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 3000;
