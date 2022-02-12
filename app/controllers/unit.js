@@ -62,6 +62,33 @@ exports.findAll = (req, res) => {
     });
 };
 
+// Retrieve all units with launch and blk
+exports.findBlk = (req, res) => {
+  let launch = req.params.launch
+  let blk = req.params.blk
+
+  Unit.findAll({
+    where: {
+      "fk_launch": launch,
+      "blk": blk
+    },
+  })
+    .then((data) => {
+      if (data) {
+        res.send(data);
+      } else {
+        res.status(404).send({
+          message: `Cannot find Unit with launch=${launch} and blk=${blk}.`,
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Error retrieving Unit with launch=" + launch + " and blk=" + blk,
+      });
+    });
+};
+
 // Update a Unit by launch
 exports.update = (req, res) => {
   let launch = req.params.launch
