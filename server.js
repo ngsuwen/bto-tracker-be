@@ -34,6 +34,8 @@ const projectController = require("./app/routes/project")
 app.use("/api/project", projectController)
 const unitController = require("./app/routes/unit")
 app.use("/api/units", unitController)
+const userController = require("./app/routes/user")
+app.use("/api/user", userController)
 
 // set port, listen for requests
 const PORT = process.env.PORT || 3000;
