@@ -30,6 +30,20 @@ exports.create = async (req, res) => {
     });
 };
 
+// Retrieve all users
+exports.findAll = (req, res) => {
+  User.findAll()
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving users.",
+      });
+    });
+};
+
 // Retrieve user
 exports.findOne = (req, res) => {
   let username = req.params.username;

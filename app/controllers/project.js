@@ -86,9 +86,7 @@ exports.update = (req, res) => {
   })
     .then((num) => {
       if (num == 1) {
-        res.send({
-          message: "Project was updated successfully.",
-        });
+        res.send(req.body);
       } else {
         res.send({
           message: `Cannot update project with launch=${launch}. Maybe project was not found or req.body is empty!`,

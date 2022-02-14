@@ -5,6 +5,9 @@ var router = require("express").Router();
 // Create a new unit
 router.post("/", users.create);
 
+// Retrieve all users
+router.get("/", users.findAll);
+
 // Retrieve a user 
 router.get("/:username", users.findOne);
 
