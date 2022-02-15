@@ -13,6 +13,7 @@ exports.create = async (req, res) => {
   const isValid = await bcrypt.compare(req.body.password, user.password);
   if (isValid) {
     req.session.user = user;
+    console.log(req.session)
     res.send(req.session.user);
   } else {
     res.send({
