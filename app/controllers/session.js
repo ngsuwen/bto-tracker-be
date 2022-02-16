@@ -9,7 +9,11 @@ exports.create = async (req, res) => {
       "username": req.body.username,
     },
   });
-
+  if (!user){
+    res.send({
+      message: "Cannot create session.",
+    });
+  }
   const isValid = await bcrypt.compare(req.body.password, user.password);
   if (isValid) {
     req.session.user = user;
@@ -21,6 +25,17 @@ exports.create = async (req, res) => {
     });
   }
 };
+
+exports.findOne = (req, res) => {
+  if (req.session.user){
+    res.send(req.session.user);
+  } else {
+    res.send({
+      message: "No valid session.",
+    });
+  };
+};
+
 
 exports.delete = (req, res) => {
   req.session.destroy(() => {
