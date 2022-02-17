@@ -58,6 +58,8 @@ const unitController = require("./app/routes/unit");
 app.use("/api/units", unitController);
 const userController = require("./app/routes/user");
 app.use("/api/user", userController);
+const queueController = require("./app/routes/queue");
+app.use("/api/queue", queueController);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 3000;
