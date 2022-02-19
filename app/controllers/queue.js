@@ -34,8 +34,35 @@ exports.create = async (req, res) => {
     });
 };
 
-// Retrieve all queue with launch and type
+// Retrieve all queue with launch
 exports.find = (req, res) => {
+  let launch = req.params.launch;
+
+  Queue.findAll({
+    where: {
+      fk_launch: launch,
+      status: false,
+    },
+  })
+    .then((data) => {
+      if (data) {
+        res.send(data);
+      } else {
+        res.status(404).send({
+          message: `Cannot find Queue with launch=${launch}.`,
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          "Error retrieving Queue with launch=" + launch,
+      });
+    });
+};
+
+// Retrieve all queue with launch and type
+exports.findOne = (req, res) => {
   let launch = req.params.launch;
   let type = req.params.unit_type;
 
@@ -62,7 +89,7 @@ exports.find = (req, res) => {
     });
 };
 
-// Update a Queue by launch and type
+// Update a Queue by launch and type and queue
 exports.update = (req, res) => {
   let launch = req.params.launch;
   let type = req.params.unit_type;

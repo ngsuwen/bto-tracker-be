@@ -5,8 +5,11 @@ var router = require("express").Router();
 // Create a new queue
 router.post("/", queue.create);
 
+// Retrieve all queue with launch
+router.get("/:launch", queue.find);
+
 // Retrieve all queue with launch and type
-router.get("/:launch/:unit_type", queue.find);
+router.get("/:launch/:unit_type", queue.findOne);
 
 // Update a queue with launch, unit type and queue to be edited
 router.put("/:launch/:unit_type/:queue", queue.update);
