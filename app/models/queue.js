@@ -19,6 +19,9 @@ module.exports = (sequelize, Sequelize) => {
     status: {
       type: Sequelize.BOOLEAN,
     },
+    acknowledged: {
+      type: Sequelize.BOOLEAN,
+    },
   });
 
   return Queue;

@@ -18,6 +18,7 @@ exports.create = async (req, res) => {
     queue_type: req.body.queue_type,
     validation: req.body.validation,
     status: req.body.status,
+    acknowledged: req.body.acknowledged,
     projectId: project.id,
     fk_launch: project.launch,
   };
@@ -41,7 +42,7 @@ exports.find = (req, res) => {
   Queue.findAll({
     where: {
       fk_launch: launch,
-      status: false,
+      acknowledged: false,
     },
   })
     .then((data) => {
@@ -125,6 +126,14 @@ exports.delete = async(req, res) => {
   let type = req.params.unit_type;
   let queue = req.params.queue;
 
+  const data = Queue.findOne({
+    where: {
+      fk_launch: launch,
+      unit_type: type,
+      number: queue,
+    },
+  })
+
   Queue.destroy({
     where: {
       fk_launch: launch,
@@ -134,9 +143,7 @@ exports.delete = async(req, res) => {
   })
     .then((num) => {
       if (num == 1) {
-        res.send({
-          message: "Queue was deleted successfully!",
-        });
+        res.send(data);
       } else {
         res.send({
           message: `Cannot delete Queue with launch=${launch} and unit type=${type}. Maybe Queue was not found!`,
