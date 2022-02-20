@@ -12,9 +12,14 @@ exports.create = async (req, res) => {
   });
 
   const user = {
-    username: req.body.username,
-    password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10)),
+    username: req.body.username ? req.body.username : null,
+    password: req.body.password
+      ? bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10))
+      : null,
     role: req.body.role,
+    email: req.body.email,
+    validation: req.body.validation,
+    msg: req.body.message,
     projectId: project.id,
     fk_launch: project.launch,
   };
@@ -38,8 +43,7 @@ exports.findAll = (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving users.",
+        message: err.message || "Some error occurred while retrieving users.",
       });
     });
 };
@@ -69,9 +73,9 @@ exports.findOne = (req, res) => {
     });
 };
 
-// Update user
+// Update user password
 exports.update = async (req, res) => {
-  let username = req.body.username;
+  let id = req.body.id;
   let oldPassword = req.body.oldPassword;
   let newPassword = bcrypt.hashSync(
     req.body.newPassword,
@@ -80,7 +84,7 @@ exports.update = async (req, res) => {
 
   const userToUpdate = await User.findOne({
     where: {
-      username: username,
+      id: id,
     },
   });
 
@@ -89,14 +93,14 @@ exports.update = async (req, res) => {
       { password: newPassword },
       {
         where: {
-          username: username,
+          id: id,
         },
       }
     )
       .then((num) => {
         if (num == 1) {
           res.send({
-            message: "User was updated successfully.",
+            status: "User was updated successfully.",
           });
         } else {
           res.send({
@@ -116,35 +120,68 @@ exports.update = async (req, res) => {
   }
 };
 
+// Update user settings (admin side)
+exports.updateAdmin = (req, res) => {
+  User.update(
+    {
+      username: req.body.username,
+      password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10)),
+    },
+    {
+      where: {
+        id: req.body.id,
+      },
+    }
+  )
+    .then((num) => {
+      if (num == 1) {
+        res.send({
+          status: "User was updated successfully.",
+        });
+      } else {
+        res.send({
+          message: `Cannot update User with username=${username}. Maybe User was not found or req.body is empty!`,
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Error updating User with username=" + username,
+      });
+    });
+};
+
 // Delete user
-exports.delete = async(req, res) => {
-  let username = req.body.username;
+exports.delete = async (req, res) => {
+  let id = req.body.id;
   let password = req.body.password;
   const userToDelete = await User.findOne({
     where: {
-      username: username,
+      id: id,
     },
   });
   if (bcrypt.compareSync(password, userToDelete.password)) {
-    User.destroy({
+    User.update({
+      username:"deleted"
+    },{
       where: {
-        username: username,
+        id: id,
       },
     })
       .then((num) => {
         if (num == 1) {
           res.send({
-            message: "User was deleted successfully!",
+            status: "User was deleted successfully!",
           });
         } else {
           res.send({
-            message: `Cannot delete User with username=${username}. Maybe User was not found!`,
+            message: `Cannot delete User with id=${id}. Maybe User was not found!`,
           });
         }
       })
       .catch((err) => {
         res.status(500).send({
-          message: "Could not delete User with username=" + username,
+          message: "Could not delete User with id=" + id,
         });
       });
   } else {
@@ -152,4 +189,31 @@ exports.delete = async(req, res) => {
       message: "Wrong password",
     });
   }
+};
+
+// Delete user (admin)
+exports.deleteAdmin = async (req, res) => {
+  let id = req.body.id;
+
+  User.destroy({
+    where: {
+      id: id,
+    },
+  })
+    .then((num) => {
+      if (num == 1) {
+        res.send({
+          status: "User was deleted successfully!",
+        });
+      } else {
+        res.send({
+          message: `Cannot delete User with id=${id}. Maybe User was not found!`,
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Could not delete User with id=" + id,
+      });
+    });
 };
