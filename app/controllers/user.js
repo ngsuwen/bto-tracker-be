@@ -2,6 +2,9 @@ const db = require("../models/index");
 const bcrypt = require("bcrypt");
 const User = db.user;
 const Project = db.projects; // projects table
+const mailgun = require("mailgun-js");
+const DOMAIN = process.env.DOMAIN;
+const mg = mailgun({apiKey: process.env.API_KEY, domain: DOMAIN});
 
 // Create user
 exports.create = async (req, res) => {
@@ -121,7 +124,12 @@ exports.update = async (req, res) => {
 };
 
 // Update user settings (admin side)
-exports.updateAdmin = (req, res) => {
+exports.updateAdmin = async(req, res) => {
+  const userToUpdate = await User.findOne({
+    where: {
+      id: req.body.id,
+    },
+  });
   User.update(
     {
       username: req.body.username,
@@ -135,18 +143,29 @@ exports.updateAdmin = (req, res) => {
   )
     .then((num) => {
       if (num == 1) {
+        let email = {
+          from: 'BtoTracker <bto.tracker.website@gmail.com>',
+          to: userToUpdate.email,
+          subject: 'Registeration Successful',
+          html: `
+          <p>Thank you for your interest.</p>
+          <p>Please use the following account details for your login. You are strongly recommended to update your password after your first login.</p>
+          <b>username:</b> ${req.body.username}<br/>
+          <b>password:</b> ${req.body.password}<br/>`
+        };
+        mg.messages().send(email);
         res.send({
           status: "User was updated successfully.",
         });
       } else {
         res.send({
-          message: `Cannot update User with username=${username}. Maybe User was not found or req.body is empty!`,
+          message: `Cannot update User with id=${req.body.id}. Maybe User was not found or req.body is empty!`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Error updating User with username=" + username,
+        message: "Error updating User with id=" + req.body.id,
       });
     });
 };
