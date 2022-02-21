@@ -154,6 +154,16 @@ exports.updateAdmin = async(req, res) => {
           <b>password:</b> ${req.body.password}<br/>`
         };
         mg.messages().send(email);
+        Project.update(
+          {
+            [userToUpdate.role]: true,
+          },
+          {
+            where: {
+              launch: userToUpdate.fk_launch,
+            },
+          }
+        )
         res.send({
           status: "User was updated successfully.",
         });
