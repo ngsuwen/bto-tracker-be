@@ -53,6 +53,10 @@ app.use((req, res, next)=>{
   next()
 })
 
+app.use(express.session({
+  proxy : true, 
+}));
+
 // controllers
 const projectController = require("./app/routes/project");
 app.use("/api/project", projectController);
