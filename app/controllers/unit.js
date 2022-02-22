@@ -97,7 +97,7 @@ exports.update = (req, res) => {
 
   Unit.update(req.body, {
     where: { 
-      "launch": launch,
+      "fk_launch": launch,
       "blk": blk,
       "unit": unit
     },
@@ -105,7 +105,7 @@ exports.update = (req, res) => {
     .then((num) => {
       if (num == 1) {
         res.send({
-          message: "Unit was updated successfully.",
+          status: "Unit was updated successfully.",
         });
       } else {
         res.send({
