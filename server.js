@@ -6,8 +6,9 @@ const session = require("express-session");
 const app = express();
 
 var corsOptions = {
-  origin: ["http://localhost:3000","https://ngsuwen.github.io", "http://bto-tracker.herokuapp.com"],
+  origin: ["http://bto-tracker.herokuapp.com"],
 };
+app.set('trust proxy', 1)
 
 app.use(cors(corsOptions));
 
