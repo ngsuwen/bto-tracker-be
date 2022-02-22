@@ -36,10 +36,10 @@ app.use(
     secret: process.env.SECRET,
     saveUninitialized: false,
     resave: false,
-    // cookie: {
-    //   sameSite: 'none',
-    //   secure: true
-    // }
+    cookie: {
+      sameSite: 'none',
+      secure: true
+    }
   })
 );
 
