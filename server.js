@@ -39,11 +39,11 @@ app.use(
     saveUninitialized: false,
     resave: false,
     proxy: true,
-    cookie: {
-      sameSite: 'none',
-      domain: process.env.DOMAIN_COOKIES,
-      secure: true
-    }
+    // cookie: {
+    //   sameSite: 'none',
+    //   domain: process.env.DOMAIN_COOKIES,
+    //   secure: true
+    // }
   })
 );
 
