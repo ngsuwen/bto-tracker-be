@@ -41,6 +41,7 @@ app.use(
     proxy: true,
     cookie: {
       sameSite: 'none',
+      domain: process.env.DOMAIN_COOKIES,
       secure: true
     }
   })
