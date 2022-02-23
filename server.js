@@ -6,7 +6,7 @@ const session = require("express-session");
 const app = express();
 
 var corsOptions = {
-  origin: process.env.CORS_WHITELIST,
+  origin: process.env.CORS_WHITELIST.split(" "),
   credentials: true
 };
 app.set('trust proxy', 1)
