@@ -89,6 +89,32 @@ exports.findBlk = (req, res) => {
     });
 };
 
+// Retrieve feedback
+exports.findFeedback = (req, res) => {
+  let launch = req.params.launch
+
+  Unit.findAll({
+    where: {
+      "fk_launch": launch,
+      "blk": null
+    },
+  })
+    .then((data) => {
+      if (data) {
+        res.send(data);
+      } else {
+        res.status(404).send({
+          message: `Cannot find Unit with launch=${launch} and blk=${blk}.`,
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Error retrieving Unit with launch=" + launch + " and blk=" + blk,
+      });
+    });
+};
+
 // Update a Unit by launch
 exports.update = (req, res) => {
   let launch = req.params.launch

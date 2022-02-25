@@ -8,6 +8,9 @@ router.post("/", units.create);
 // Retrieve all units with launch
 router.get("/:launch", units.findAll);
 
+// Retrieve feedback for units
+router.get("/feedback/:launch", units.findFeedback);
+
 // Retrieve all units with launch and blk
 router.get("/:launch/:blk", units.findBlk);
 
