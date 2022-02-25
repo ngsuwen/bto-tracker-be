@@ -152,7 +152,7 @@ exports.deleteFeedback = (req, res) => {
 
   Unit.destroy({
     where: { 
-      "launch": launch,
+      "fk_launch": launch,
       "blk": blk,
       "unit": unit
     },
@@ -214,7 +214,7 @@ exports.delete = (req, res) => {
 
   Unit.destroy({
     where: { 
-      "launch": launch,
+      "fk_launch": launch,
       "blk": blk,
       "unit": unit
     },
