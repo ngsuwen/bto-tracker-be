@@ -133,13 +133,13 @@ exports.updateFeedback = (req, res) => {
         });
       } else {
         res.send({
-          message: `Cannot update Unit with launch=${launch} and blk=${blk}. Maybe Unit was not found or req.body is empty!`,
+          message: `Cannot update Unit with launch=${launch}. Maybe Unit was not found or req.body is empty!`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Error updating Unit with launch=" + launch + "and blk=" + blk,
+        message: "Error updating Unit with launch=" + launch,
       });
     });
 };
