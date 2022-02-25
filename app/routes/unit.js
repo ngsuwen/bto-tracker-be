@@ -11,6 +11,12 @@ router.get("/:launch", units.findAll);
 // Retrieve feedback for units
 router.get("/feedback/:launch", units.findFeedback);
 
+// Remove feedback
+router.delete("/feedback/:launch", units.deleteFeedback);
+
+// Update a unit with launch, and unit to be edited
+router.put("feedback/:launch/:unit", units.updateFeedback);
+
 // Retrieve all units with launch and blk
 router.get("/:launch/:blk", units.findBlk);
 

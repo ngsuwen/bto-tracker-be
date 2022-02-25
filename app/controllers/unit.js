@@ -115,6 +115,66 @@ exports.findFeedback = (req, res) => {
     });
 };
 
+// Update a Unit for Feedback
+exports.updateFeedback = (req, res) => {
+  let launch = req.params.launch
+  let unit = req.params.unit
+
+  Unit.update(req.body, {
+    where: { 
+      "fk_launch": launch,
+      "unit": unit
+    },
+  })
+    .then((num) => {
+      if (num == 1) {
+        res.send({
+          status: "Unit was updated successfully.",
+        });
+      } else {
+        res.send({
+          message: `Cannot update Unit with launch=${launch} and blk=${blk}. Maybe Unit was not found or req.body is empty!`,
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Error updating Unit with launch=" + launch + "and blk=" + blk,
+      });
+    });
+};
+
+// Delete a Feedback
+exports.deleteFeedback = (req, res) => {
+  let launch = req.params.launch
+  let blk = null
+  let unit = req.params.unit
+
+  Unit.destroy({
+    where: { 
+      "launch": launch,
+      "blk": blk,
+      "unit": unit
+    },
+  })
+    .then((num) => {
+      if (num == 1) {
+        res.send({
+          message: "Unit was deleted successfully!",
+        });
+      } else {
+        res.send({
+          message: `Cannot delete Unit with launch=${launch} and blk=${blk}. Maybe Unit was not found!`,
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Could not delete Unit with launch=" + launch + "and blk=" + blk,
+      });
+    });
+};
+
 // Update a Unit by launch
 exports.update = (req, res) => {
   let launch = req.params.launch
