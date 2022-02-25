@@ -160,7 +160,7 @@ exports.deleteFeedback = (req, res) => {
     .then((num) => {
       if (num == 1) {
         res.send({
-          message: "Unit was deleted successfully!",
+          status: "Unit was deleted successfully!",
         });
       } else {
         res.send({
